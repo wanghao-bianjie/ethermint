@@ -22,6 +22,16 @@ type Client struct {
 	mock.Mock
 }
 
+func (_m *Client) Header(ctx context.Context, height *int64) (*coretypes.ResultHeader, error) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (_m *Client) HeaderByHash(ctx context.Context, hash bytes.HexBytes) (*coretypes.ResultHeader, error) {
+	//TODO implement me
+	panic("implement me")
+}
+
 // ABCIInfo provides a mock function with given fields: _a0
 func (_m *Client) ABCIInfo(_a0 context.Context) (*coretypes.ResultABCIInfo, error) {
 	ret := _m.Called(_a0)

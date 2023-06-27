@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"math/big"
 
-	abci "github.com/cometbft/cometbft/abci/types"
+	types1 "github.com/cometbft/cometbft/proto/tendermint/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
@@ -98,11 +98,11 @@ func (suite *KeeperTestSuite) TestCalculateBaseFee() {
 			suite.app.FeeMarketKeeper.SetBlockGasWanted(suite.ctx, tc.parentBlockGasWanted)
 
 			// Set next block target/gasLimit through Consensus Param MaxGas
-			blockParams := abci.BlockParams{
+			blockParams := types1.BlockParams{
 				MaxGas:   100,
 				MaxBytes: 10,
 			}
-			consParams := abci.ConsensusParams{Block: &blockParams}
+			consParams := types1.ConsensusParams{Block: &blockParams}
 			suite.ctx = suite.ctx.WithConsensusParams(&consParams)
 
 			fee := suite.app.FeeMarketKeeper.CalculateBaseFee(suite.ctx)

@@ -8,6 +8,7 @@ import (
 	"time"
 
 	sdkmath "cosmossdk.io/math"
+	"cosmossdk.io/simapp"
 	"github.com/stretchr/testify/suite"
 
 	"github.com/cosmos/cosmos-sdk/codec"
@@ -420,7 +421,7 @@ func (suite *AnteTestSuite) CreateTestEIP712SubmitProposalV1(from sdk.AccAddress
 		proposalMsgs,
 		sdk.NewCoins(sdk.NewCoin(evmtypes.DefaultEVMDenom, sdkmath.NewInt(100))),
 		sdk.MustBech32ifyAddressBytes(sdk.GetConfig().GetBech32AccountAddrPrefix(), from.Bytes()),
-		"Metadata",
+		"Metadata", "", "",
 	)
 
 	suite.Require().NoError(err)
