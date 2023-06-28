@@ -17,6 +17,7 @@ package app
 
 import (
 	"encoding/json"
+	"github.com/cosmos/cosmos-sdk/baseapp"
 	"time"
 
 	"cosmossdk.io/simapp"
@@ -66,6 +67,7 @@ func Setup(isCheckTx bool, patchGenesis func(*EthermintApp, simapp.GenesisState)
 
 // SetupWithDB initializes a new EthermintApp. A Nop logger is set in EthermintApp.
 func SetupWithDB(isCheckTx bool, patchGenesis func(*EthermintApp, simapp.GenesisState) simapp.GenesisState, db dbm.DB) *EthermintApp {
+	// setup chain id
 	app := NewEthermintApp(log.NewNopLogger(),
 		db,
 		nil,
@@ -74,7 +76,9 @@ func SetupWithDB(isCheckTx bool, patchGenesis func(*EthermintApp, simapp.Genesis
 		DefaultNodeHome,
 		5,
 		encoding.MakeConfig(ModuleBasics),
-		simtestutil.EmptyAppOptions{})
+		simtestutil.EmptyAppOptions{},
+		// NOTE: added as init examines the chain id
+		baseapp.SetChainID("ethermint_9000-1"))
 	if !isCheckTx {
 		// init chain must be called to stop deliverState from being nil
 		genesisState := NewTestGenesisState(app.AppCodec())

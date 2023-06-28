@@ -494,6 +494,8 @@ func setupChain(localMinGasPricesStr string) {
 		encoding.MakeConfig(app.ModuleBasics),
 		simtestutil.EmptyAppOptions{},
 		baseapp.SetMinGasPrices(localMinGasPricesStr),
+		// NOTE: added as init examines the chain id
+		baseapp.SetChainID("ethermint_9000-1"),
 	)
 
 	genesisState := app.NewTestGenesisState(newapp.AppCodec())
