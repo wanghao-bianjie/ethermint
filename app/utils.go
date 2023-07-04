@@ -17,10 +17,10 @@ package app
 
 import (
 	"encoding/json"
-	"github.com/cosmos/cosmos-sdk/baseapp"
 	"time"
 
 	"cosmossdk.io/simapp"
+	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/codec"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	cryptocodec "github.com/cosmos/cosmos-sdk/crypto/codec"

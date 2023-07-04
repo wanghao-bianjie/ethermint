@@ -23,10 +23,9 @@ import (
 	"fmt"
 	"sort"
 
-	etherminthd "github.com/evmos/ethermint/crypto/hd"
-
-	bip39 "github.com/cosmos/go-bip39"
 	"github.com/spf13/cobra"
+
+	etherminthd "github.com/evmos/ethermint/crypto/hd"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
@@ -37,6 +36,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/crypto/keys/multisig"
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/cosmos/go-bip39"
 )
 
 const (

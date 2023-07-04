@@ -23,12 +23,12 @@ type Client struct {
 }
 
 func (_m *Client) Header(ctx context.Context, height *int64) (*coretypes.ResultHeader, error) {
-	//TODO implement me
+	// TODO implement me
 	panic("implement me")
 }
 
 func (_m *Client) HeaderByHash(ctx context.Context, hash bytes.HexBytes) (*coretypes.ResultHeader, error) {
-	//TODO implement me
+	// TODO implement me
 	panic("implement me")
 }
 
