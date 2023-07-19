@@ -18,6 +18,7 @@ import (
 	feemarketkeeper "github.com/evmos/ethermint/x/feemarket/keeper"
 	v1 "github.com/evmos/ethermint/x/feemarket/migrations/v1"
 	v2 "github.com/evmos/ethermint/x/feemarket/migrations/v2"
+	v2types "github.com/evmos/ethermint/x/feemarket/migrations/v2/types"
 	feemarkettypes "github.com/evmos/ethermint/x/feemarket/types"
 )
 
@@ -29,6 +30,18 @@ func TestMigrateStore(t *testing.T) {
 	paramstore := paramtypes.NewSubspace(
 		encCfg.Codec, encCfg.Amino, feemarketKey, tFeeMarketKey, "feemarket",
 	)
+
+	paramstore = paramstore.WithKeyTable(v2types.ParamKeyTable())
+	require.True(t, paramstore.HasKeyTable())
+
+	params := v2types.DefaultParams()
+	paramstore.SetParamSet(ctx, &params)
+
+	// check that the fee market is not nil
+	err := v2.MigrateStore(ctx, &paramstore, feemarketKey)
+	require.NoError(t, err)
+	require.False(t, ctx.KVStore(feemarketKey).Has(v2.KeyPrefixBaseFeeV1))
+
 	fmKeeper := feemarketkeeper.NewKeeper(
 		encCfg.Codec,
 		authtypes.NewModuleAddress(govtypes.ModuleName),
@@ -36,18 +49,9 @@ func TestMigrateStore(t *testing.T) {
 		tFeeMarketKey,
 		paramstore,
 	)
-	fmKeeper.SetParams(ctx, feemarkettypes.DefaultParams())
 
-	paramstore = paramstore.WithKeyTable(feemarkettypes.ParamKeyTable())
-	require.True(t, paramstore.HasKeyTable())
-
-	// check that the fee market is not nil
-	err := v2.MigrateStore(ctx, &paramstore, feemarketKey)
-	require.NoError(t, err)
-	require.False(t, ctx.KVStore(feemarketKey).Has(v2.KeyPrefixBaseFeeV1))
-
-	params := fmKeeper.GetParams(ctx)
-	require.False(t, params.BaseFee.IsNil())
+	expParams := fmKeeper.GetParams(ctx)
+	require.False(t, expParams.BaseFee.IsNil())
 
 	baseFee := fmKeeper.GetBaseFee(ctx)
 	require.NotNil(t, baseFee)
